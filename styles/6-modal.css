@@ -1,0 +1,246 @@
+#modal-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1500;
+  display: none;
+  overflow-y: auto;
+  justify-content: flex-end;
+}
+
+.cart__modal {
+  position: relative;
+  width: 33vw;
+  box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+  background-color: #fef9e7;
+  border-radius: 20px 0 0 20px;
+  overflow: hidden;
+}
+
+.modal__top {
+  display: flex;
+  justify-content: space-around;
+  background-color: #4e342e;
+  height: 80px;
+}
+
+.modal__top p {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #daa520;
+  padding-bottom: 6px;
+}
+
+.close__img-area {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+}
+
+.close__img-area img {
+  width: 60%;
+  height: 60%;
+  padding-bottom: 20px;
+}
+
+.cart__list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: calc(100vh - 200px);
+  overflow-y: auto; /* 상품이 많아지면 스크롤 생성 */
+  padding: 20px 15px;
+}
+
+.list__container {
+  display: flex;
+  align-items: stretch; /* 이미지 높이에 맞춰 내부 영역 높이 통일 */
+  gap: 15px;
+  padding: 15px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(78, 52, 46, 0.04);
+  border: 2px solid rgba(78, 52, 46, 0.05);
+}
+
+/* 3. 이미지 구역 */
+.list__img-area {
+  height: 110px;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.list__img-area img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.list__title-amount {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 2px 0;
+}
+
+.list__title-amount h1.list__title {
+  font-size: 1rem;
+  text-align: left;
+  font-weight: 700;
+  color: #4e342e;
+  margin: 0;
+  word-break: keep-all; /* 단어 단위 줄바꿈으로 깔끔하게 */
+  line-height: 1.3;
+}
+
+.quantity-picker {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  background-color: #fff;
+  overflow: hidden;
+  width: fit-content;
+}
+
+/* 플러스, 마이너스 버튼 공통 스타일 */
+.quantity-picker button {
+  width: 30px;
+  height: 30px;
+  border: none;
+  background-color: #ffffff;
+  color: #333;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+  /* 버튼 클릭 시 파란 테두리 생기는 것 방지 */
+  outline: none;
+}
+
+/* 버튼에 마우스를 올렸을 때 (Hover) */
+.quantity-picker button:hover {
+  background-color: #f5f5f5;
+  color: #000;
+}
+
+/* 버튼을 누르고 있을 때 (Active) */
+.quantity-picker button:active {
+  background-color: #ebebeb;
+}
+
+/* 숫자가 표시되는 input 상자 */
+.quantity-input {
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-left: 1px solid #e0e0e0;
+  border-right: 1px solid #e0e0e0;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+  background-color: #fff;
+  /* input 클릭 시 파란 테두리 방지 */
+  outline: none;
+}
+
+/* 브라우저 기본 수량 조절 화살표(스피너) 제거 */
+.quantity-input::-webkit-outer-spin-button,
+.quantity-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.quantity-input[type="number"] {
+  -moz-appearance: textfield; /* 파이어폭스용 제거 */
+}
+
+.list__delete-price {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 2px 0;
+}
+
+.list__delete-area {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+
+.list__delete-area img {
+  width: 100%;
+  height: 100%s;
+}
+
+.list__delete-area:hover {
+  opacity: 1;
+}
+
+.list__delete-price p {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #4e342e;
+  margin: 0;
+}
+
+.cart__list.empty {
+  height: 50vh;
+  justify-content: center;
+  align-items: center;
+}
+
+.cart__list.empty h1 {
+  font-size: 1.5rem;
+  color: #8d6e63;
+  font-weight: 500;
+  font-weight: bold;
+}
+.bottom__infor {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: #4e342e;
+  width: 100%;
+  height: 80px;
+}
+
+#total__price {
+  color: #daa520;
+  text-align: right;
+  padding: 20px 25px;
+}
+
+.no-scroll {
+  overflow: hidden;
+  height: 100%;
+}
+
+@media (max-width: 768px) {
+  .cart__modal {
+    position: relative;
+    width: 100vw;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+    background-color: #fef9e7;
+    border-radius: 20px 0 0 20px;
+    overflow: hidden;
+  }
+}
+
+@media (min-width: 769px) {
+}

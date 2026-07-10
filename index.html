@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sunflower Libros</title>
+    <link rel="shortcut icon" href="images/logo.png" type="image/x-icon" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <section id="cursor" class="cursor">
+      <div id="cursor__pointer">
+        <div class="cursor__outer"></div>
+      </div>
+    </section>
+
+    <header id="header">
+      <div class="header__container">
+        <div class="header__homelink">
+          <img class="header__log" src="images/logo.png" alt="log" />
+        </div>
+        <input class="header__menu-btn" type="checkbox" />
+        <nav class="header__nav">
+          <ul>
+            <li>
+              <a
+                href="https://wa.me/5493434681840?text=Hola!%20Me%20gustaría%20hacer%20una%20consulta."
+                target="_blank"
+                class="whatsapp-btn"
+              >
+                <div class="chat__logo-area">
+                  <img src="images/chat.png" alt="chat" />
+                </div>
+                <div class="desc">Ayuda</div>
+              </a>
+            </li>
+            <li>
+              <div id="cart-wrapper" class="cart-wrapper">
+                <div class="cart__logo-area">
+                  <img src="images/cart.png" alt="cart" />
+                </div>
+                <div class="cart-count">
+                  <span id="count__num">0</span>
+                </div>
+                <div class="desc">Mi carrito</div>
+              </div>
+
+              <div id="modal-overlay">
+                <div class="cart__modal">
+                  <div class="modal__top">
+                    <p>Carrito de Compras</p>
+                    <div class="close__img-area">
+                      <img
+                        id="modal__close"
+                        src="images/close.png"
+                        alt="close"
+                      />
+                    </div>
+                  </div>
+                  <div id="cart__list" class="cart__list"></div>
+                  <div class="bottom__infor">
+                    <div id="total__price">Total: $0</div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <section id="intro" class="intro">
+      <div class="flower__container">
+        <div class="flower__head">
+          <div class="flower__eyes">
+            <div class="inner__eye"></div>
+          </div>
+          <div class="flower__eyes">
+            <div class="inner__eye"></div>
+          </div>
+        </div>
+        <div class="flower__mouth">‿</div>
+        <div class="flower__petals inner__group">
+          <div class="inner__petal"></div>
+          <div class="inner__petal"></div>
+          <div class="inner__petal"></div>
+          <div class="inner__petal"></div>
+          <div class="inner__petal"></div>
+          <div class="inner__petal"></div>
+          <div class="inner__petal"></div>
+          <div class="inner__petal"></div>
+          <div class="inner__petal"></div>
+          <div class="inner__petal"></div>
+          <div class="inner__petal"></div>
+          <div class="inner__petal"></div>
+        </div>
+        <div class="flower__petals outer__group">
+          <div class="outer__petal"></div>
+          <div class="outer__petal"></div>
+          <div class="outer__petal"></div>
+          <div class="outer__petal"></div>
+          <div class="outer__petal"></div>
+          <div class="outer__petal"></div>
+          <div class="outer__petal"></div>
+          <div class="outer__petal"></div>
+          <div class="outer__petal"></div>
+          <div class="outer__petal"></div>
+          <div class="outer__petal"></div>
+          <div class="outer__petal"></div>
+        </div>
+      </div>
+    </section>
+    <main id="main">
+      <section class="main__banner">
+        <div class="info__delivery">
+          <div class="info__logo">
+            <img src="images/delivery.png" alt="delivery" />
+          </div>
+          <div class="infor__text">
+            <h1>Envíos a todo el país y AL MUNDO con DHL</h1>
+            <p>Envio gratis a sucursal en compras superiores a $100.000</p>
+          </div>
+        </div>
+
+        <div class="info__discount">
+          <div class="info__logo">
+            <img src="images/discount.png" alt="discount" />
+          </div>
+          <div class="infor__text">
+            <h1>Descuentos y promociones todo los dias</h1>
+            <p>Codigos de descuentos, reintegros y cuotas</p>
+          </div>
+        </div>
+        <div class="info__whatsApp">
+          <div class="info__logo">
+            <img src="images/whatsApp.png" alt="whatsApp" />
+          </div>
+          <div class="infor__text">
+            <h1>¿Tenes dudas? Contactanos!</h1>
+            <p>Te acompañamos en tu proceso de compra</p>
+          </div>
+        </div>
+      </section>
+      <section id="hero">
+        <div class="hero__title">
+          <h1>Novedades de Junio</h1>
+        </div>
+        <div id="category"></div>
+        <div id="card__container"></div>
+      </section>
+    </main>
+
+    <footer id="footer">
+      <div class="footer__container">
+        <div class="footer__info">
+          <h1>SUNFLOWER LIBROS</h1>
+          <p>Tu librería de confianza, hecha con amor.</p>
+        </div>
+
+        <div class="footer__contact">
+          <h1>Seguinos</h1>
+          <p class="insta">
+            <span class="icon__area">
+              <img src="images/insta.png" alt="insta" />
+            </span>
+            <a
+              href="https://www.instagram.com/sunflowerlibreria/"
+              target="_blank"
+              class="instagram-link"
+            >
+              @sunflowerlibreria
+            </a>
+          </p>
+        </div>
+        <div class="copyright">
+          <p>© 2026 SUNFLOWER LIBROS. Todos los derechos reservados.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
