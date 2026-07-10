@@ -91,40 +91,6 @@ li {
 }
 
 @media (max-width: 768px) {
-  .header__nav {
-    display: none;
-  }
-
-  .header__menu-btn {
-    all: unset;
-    display: block;
-    width: 80px;
-    height: 80px;
-    background-image: url(../images/menu-button.svg);
-    background-size: 60%;
-    background-repeat: no-repeat;
-    background-position: center;
-    cursor: pointer;
-    background-color: #4e342e;
-  }
-
-  .header__menu-btn:checked {
-    background-color: #daa520;
-    border-radius: 8px;
-  }
-
-  .header__menu-btn:checked + .header__nav {
-    display: block;
-    position: absolute;
-    top: 100%;
-    right: 20px;
-    background-color: #fef9e7;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-    z-index: 101;
-  }
-
   .header__nav ul {
     flex-direction: row;
     gap: 20px;
@@ -149,10 +115,6 @@ li {
     width: 100px;
     height: 100px;
     margin-left: 30px;
-  }
-
-  .header__menu-btn {
-    display: none;
   }
 
   .header__nav {

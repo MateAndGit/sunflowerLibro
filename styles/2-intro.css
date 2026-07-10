@@ -184,43 +184,43 @@
 
 @media (max-width: 768px) {
   .intro {
-    height: 45vh;
+    height: 50vh;
     padding: 0 20px;
     margin-bottom: 20px;
   }
   .flower__head {
-    width: 250px;
-    height: 250px;
+    width: 150px;
+    height: 150px;
   }
 
   .flower__eyes {
-    width: 50px;
-    height: 50px;
+    width: 30px;
+    height: 30px;
     transform: translateY(-20px);
   }
 
   .inner__eye {
-    width: 15px;
-    height: 15px;
+    width: 10px;
+    height: 10px;
   }
   .flower__mouth {
-    font-size: 8em;
+    font-size: 5em;
   }
   .outer__petal {
-    width: 50px;
-    height: 150px;
-    left: -25px;
+    width: 20px;
+    height: 70px;
+    left: -10px;
   }
   .inner__petal {
-    width: 50px;
-    height: 150px;
-    left: -25px;
+    width: 20px;
+    height: 80px;
+    left: -10px;
   }
 }
 
 @media (min-width: 769px) {
   .intro {
-    height: auto;
+    height: 700px;
     min-height: 420px;
     padding-top: 20px;
     padding-bottom: 40px;
