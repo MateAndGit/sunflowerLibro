@@ -220,7 +220,11 @@
 
 @media (min-width: 769px) {
   .intro {
-    height: 700px;
+    height: auto;
+    min-height: 420px;
+    padding-top: 20px;
+    padding-bottom: 40px;
+    position: relative;
   }
   .flower__head {
     width: 450px;
