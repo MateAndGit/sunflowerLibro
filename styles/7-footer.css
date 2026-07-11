@@ -8,14 +8,6 @@
   grid-template-columns: repeat(2, 1fr);
 }
 
-.footer__info {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border-right: 2px solid #fef9e7;
-}
-
 .footer__contact {
   display: flex;
   flex-direction: column;
@@ -103,5 +95,15 @@
     align-items: center;
     border-top: 2px solid #fef9e7;
     text-align: center;
+  }
+}
+
+@media (min-width: 769px) {
+  .footer__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-right: 2px solid #fef9e7;
   }
 }

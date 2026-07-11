@@ -49,7 +49,7 @@
   .info__whatsApp {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    /* align-items: center; */
     border-radius: 20px;
     background-color: #4e342e;
     overflow: hidden;
@@ -61,7 +61,7 @@
     height: 50px;
   }
   .infor__text h1 {
-    font-size: 1em;
+    font-size: 0.8em;
     text-align: center;
     font-weight: bold;
     color: #daa520;
