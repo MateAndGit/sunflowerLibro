@@ -24,3 +24,9 @@
   box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.3);
   filter: drop-shadow(4px 6px 8px rgba(62, 39, 35, 0.35));
 }
+
+@media (max-width: 768px) {
+  #cursor__pointer {
+    display: none;
+  }
+}
