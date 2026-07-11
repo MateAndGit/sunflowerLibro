@@ -207,14 +207,14 @@
     font-size: 5em;
   }
   .outer__petal {
-    width: 20px;
-    height: 70px;
-    left: -10px;
+    width: 30px;
+    height: 80px;
+    left: -15px;
   }
   .inner__petal {
-    width: 20px;
+    width: 30px;
     height: 80px;
-    left: -10px;
+    left: -15px;
   }
 }
 

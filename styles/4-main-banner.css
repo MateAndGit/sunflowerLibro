@@ -40,7 +40,7 @@
 @media (max-width: 768px) {
   .main__banner {
     flex-direction: column;
-    height: 80vh;
+    height: 65vh;
     gap: 10px;
     padding: 0 20px;
   }
@@ -49,26 +49,29 @@
   .info__whatsApp {
     display: flex;
     flex-direction: column;
+    align-items: center;
     border-radius: 20px;
-    min-width: 372px;
-    min-height: 200px;
     background-color: #4e342e;
     overflow: hidden;
+    min-width: 320px;
+    min-height: 120px;
+  }
+  .info__logo img {
+    width: 50px;
+    height: 50px;
   }
   .infor__text h1 {
-    margin-top: 10px;
-    font-size: 1.3em;
+    font-size: 1em;
     text-align: center;
     font-weight: bold;
     color: #daa520;
   }
 
   .infor__text p {
-    font-size: 1em;
+    font-size: 0.6em;
     color: #fef9e7;
     text-align: center;
     opacity: 0.8;
-    padding: 20px 0;
   }
 }
 
@@ -85,6 +88,7 @@
     gap: 25px;
     padding: 0 3em;
   }
+
   .infor__text h1 {
     font-size: 1.3em;
     text-align: left;
