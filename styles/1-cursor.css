@@ -18,15 +18,15 @@
     transparent 65%
   );
   border-radius: 50% 50% 40% 40% / 70% 70% 30% 30%;
-
-  transform: translate(-50%, -50%) translate(20px) rotate(15deg);
-
   box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.3);
   filter: drop-shadow(4px 6px 8px rgba(62, 39, 35, 0.35));
 }
 
 @media (max-width: 768px) {
   #cursor__pointer {
+    display: none;
+  }
+  .cursor__outer {
     display: none;
   }
 }
