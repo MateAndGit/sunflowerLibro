@@ -257,10 +257,13 @@ const products = [
 const $pointer = document.getElementById("cursor__pointer");
 const $inner__eyes = document.getElementsByClassName("inner__eye");
 
-let mouseX = 0;
-let mouseY = 0;
-let cursorX = 0;
-let cursorY = 0;
+// 🔥 핵심: 초기 시작 좌표를 0이 아니라 화면의 정중앙 좌표로 설정합니다.
+let mouseX = window.innerWidth / 2;
+let mouseY = window.innerHeight / 2;
+let cursorX = window.innerWidth / 2;
+let cursorY = window.innerHeight / 2;
+
+// 눈동자 위치 변수 초기화
 let eyeX = 0;
 let eyeY = 0;
 
