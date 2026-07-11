@@ -1,3 +1,6 @@
+/* ==========================================================================
+   1. 모달 가림막 및 컨텐츠 레이아웃
+   ========================================================================== */
 #modal-overlay {
   position: fixed;
   top: 0;
@@ -9,6 +12,7 @@
   display: none;
   overflow-y: auto;
   justify-content: flex-end;
+  pointer-events: auto; /* 뒤쪽 배경의 클릭이 뚫리지 않도록 방어 */
 }
 
 .cart__modal {
@@ -22,12 +26,22 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
-.cart-wrapper:focus,
-.cart-wrapper:active {
-  outline: none;
-  box-shadow: none;
+/* ==========================================================================
+   2. 파란색 테두리(포커스 링) 및 잔상 제거 완벽 차단
+   ========================================================================== */
+.cart-wrapper,
+.cart-wrapper *,
+li:has(.cart-wrapper),
+.quantity-picker button,
+.quantity-input {
+  outline: none !important;
+  box-shadow: none !important;
+  -webkit-tap-highlight-color: transparent; /* 모바일 터치 시 푸른 잔상 제거 */
 }
 
+/* ==========================================================================
+   3. 모달 상단 영역
+   ========================================================================== */
 .modal__top {
   display: flex;
   justify-content: space-around;
@@ -58,12 +72,15 @@
   padding-bottom: 20px;
 }
 
+/* ==========================================================================
+   4. 장바구니 상품 리스트 영역
+   ========================================================================== */
 .cart__list {
   display: flex;
   flex-direction: column;
   gap: 10px;
   max-height: calc(100vh - 200px);
-  overflow-y: auto; /* 상품이 많아지면 스크롤 생성 */
+  overflow-y: auto; /* 상품 많아지면 스크롤 */
   padding: 20px 15px;
   background-color: #f5f5f5;
   border-radius: 20px;
@@ -71,7 +88,7 @@
 
 .list__container {
   display: flex;
-  align-items: stretch; /* 이미지 높이에 맞춰 내부 영역 높이 통일 */
+  align-items: stretch;
   gap: 15px;
   padding: 15px;
   border-radius: 16px;
@@ -79,7 +96,6 @@
   border: 2px solid rgba(78, 52, 46, 0.05);
 }
 
-/* 3. 이미지 구역 */
 .list__img-area {
   height: 110px;
   overflow: hidden;
@@ -92,6 +108,7 @@
   object-fit: cover;
 }
 
+/* 상품 제목 및 수량 조절 섹션 */
 .list__title-amount {
   flex: 1;
   display: flex;
@@ -107,10 +124,13 @@
   font-weight: 700;
   color: #4e342e;
   margin: 0;
-  word-break: keep-all; /* 단어 단위 줄바꿈으로 깔끔하게 */
+  word-break: keep-all;
   line-height: 1.3;
 }
 
+/* ==========================================================================
+   5. 수량 조절 피커 (Quantity Picker)
+   ========================================================================== */
 .quantity-picker {
   display: inline-flex;
   align-items: center;
@@ -121,7 +141,6 @@
   width: fit-content;
 }
 
-/* 플러스, 마이너스 버튼 공통 스타일 */
 .quantity-picker button {
   width: 30px;
   height: 30px;
@@ -136,22 +155,17 @@
   transition:
     background-color 0.2s ease,
     color 0.2s ease;
-  /* 버튼 클릭 시 파란 테두리 생기는 것 방지 */
-  outline: none;
 }
 
-/* 버튼에 마우스를 올렸을 때 (Hover) */
 .quantity-picker button:hover {
   background-color: #f5f5f5;
   color: #000;
 }
 
-/* 버튼을 누르고 있을 때 (Active) */
 .quantity-picker button:active {
   background-color: #ebebeb;
 }
 
-/* 숫자가 표시되는 input 상자 */
 .quantity-input {
   width: 30px;
   height: 30px;
@@ -163,20 +177,21 @@
   font-weight: 600;
   color: #333;
   background-color: #fff;
-  /* input 클릭 시 파란 테두리 방지 */
-  outline: none;
 }
 
-/* 브라우저 기본 수량 조절 화살표(스피너) 제거 */
+/* 브라우저 기본 화살표 스피너 제거 */
 .quantity-input::-webkit-outer-spin-button,
 .quantity-input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 .quantity-input[type="number"] {
-  -moz-appearance: textfield; /* 파이어폭스용 제거 */
+  -moz-appearance: textfield;
 }
 
+/* ==========================================================================
+   6. 삭제 버튼 및 가격 영역
+   ========================================================================== */
 .list__delete-price {
   display: flex;
   flex-direction: column;
@@ -195,7 +210,7 @@
 
 .list__delete-area img {
   width: 100%;
-  height: 100%s;
+  height: 100%;
 }
 
 .list__delete-area:hover {
@@ -209,6 +224,7 @@
   margin: 0;
 }
 
+/* 장바구니가 비었을 때 */
 .cart__list.empty {
   height: 50vh;
   justify-content: center;
@@ -218,9 +234,10 @@
 .cart__list.empty h1 {
   font-size: 1.5rem;
   color: #8d6e63;
-  font-weight: 500;
   font-weight: bold;
 }
+
+/* 하단 금액 노출 바 */
 .bottom__infor {
   position: absolute;
   bottom: 0;
@@ -246,11 +263,11 @@
     position: relative;
     width: 100vw;
     box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
-    background-color: #fef9e7;
+    background-color: #4e342e;
     border-radius: 20px 0 0 20px;
     overflow: hidden;
   }
-}
-
-@media (min-width: 769px) {
+  .cart__list {
+    background-color: #f5f5f5;
+  }
 }
