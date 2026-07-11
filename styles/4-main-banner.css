@@ -43,16 +43,13 @@
     height: 65vh;
     gap: 10px;
     padding: 0 20px;
+    background-color: #4e342e;
   }
   .info__delivery,
   .info__discount,
   .info__whatsApp {
     display: flex;
     flex-direction: column;
-    /* align-items: center; */
-    border-radius: 20px;
-    background-color: #4e342e;
-    overflow: hidden;
     min-width: 320px;
     min-height: 120px;
   }
