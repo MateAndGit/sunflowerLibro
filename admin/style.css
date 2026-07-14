@@ -1,0 +1,222 @@
+/* Font & Base Background */
+body {
+  font-family:
+    "Pretendard",
+    -apple-system,
+    BlinkMacSystemFont,
+    system-ui,
+    sans-serif;
+  background-color: #fcf8f2;
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Warm Pastel Container Card */
+.container {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(163, 145, 126, 0.12);
+  padding: 40px 30px;
+  width: 100%;
+  max-width: 420px;
+  box-sizing: border-box;
+  border: 1px solid #f3ebe1;
+  transition: all 0.3s ease;
+}
+
+h2 {
+  color: #5c4d3c;
+  font-size: 26px;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 24px;
+  text-align: center;
+  letter-spacing: -0.5px;
+}
+
+/* Custom Input Forms */
+input[type="email"],
+input[type="password"],
+input[type="text"],
+input[type="number"],
+.simple-select,
+textarea {
+  width: 100%;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+  border: 1.5px solid #eaddcf;
+  border-radius: 12px;
+  background-color: #faf8f5;
+  font-size: 15px;
+  color: #4a3e3d;
+  box-sizing: border-box;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+}
+
+input:focus,
+.simple-select:focus,
+textarea:focus {
+  border-color: #d4a373;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(212, 163, 115, 0.15);
+}
+
+/* Custom File Upload */
+.file-upload-wrapper {
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+#book-image {
+  display: none;
+}
+
+.file-upload-label {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #f5ebe0;
+  color: #8d7b68;
+  border: 1px dashed #d4a373;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.file-upload-label:hover {
+  background-color: #eaddcf;
+}
+
+.file-name-preview {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  color: #a3917e;
+}
+
+/* Warm Tone Main Button */
+button {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  background-color: #d4a373;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    transform 0.1s;
+}
+
+button:hover {
+  background-color: #c69463;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+.admin-btn {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.admin-btn button {
+  flex: 2;
+}
+
+.admin-btn .logout-btn {
+  flex: 1;
+  background-color: #e5dac9;
+  color: #7a6e67;
+}
+
+.admin-btn .logout-btn:hover {
+  background-color: #dcd0be;
+}
+
+/* Book List Styling */
+.list-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #5c4d3c;
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1.5px dashed #eaddcf;
+}
+
+.item-list {
+  max-height: 250px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.item-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background-color: #faf8f5;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  border: 1px solid #f3ebe1;
+}
+
+.item-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.item-thumb {
+  width: 40px;
+  height: 52px;
+  object-fit: cover;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.item-info span {
+  font-size: 14px;
+  color: #4a3e3d;
+}
+
+.item-price {
+  font-size: 13px;
+  color: #b78453;
+  margin-left: 6px;
+  font-weight: 600;
+}
+
+.delete-btn {
+  width: auto;
+  padding: 6px 12px;
+  font-size: 13px;
+  background-color: #f28482;
+  border-radius: 8px;
+}
+
+.delete-btn:hover {
+  background-color: #e57371;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.item-list::-webkit-scrollbar {
+  width: 6px;
+}
+.item-list::-webkit-scrollbar-thumb {
+  background-color: #e5dac9;
+  border-radius: 10px;
+}

@@ -6,6 +6,7 @@
     <title>Sunflower Libros</title>
     <link rel="shortcut icon" href="images/logo.png" type="image/x-icon" />
     <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   </head>
   <body>
     <section id="cursor" class="cursor">
@@ -143,7 +144,12 @@
         <div class="hero__title">
           <h1>Novedades de Junio</h1>
         </div>
-        <div id="category"></div>
+        <div id="category" class="category__area"></div>
+        <select class="simple-select" id="data-select">
+          <option value="" disabled selected hidden>
+            Please select a category
+          </option>
+        </select>
         <div id="card__container"></div>
       </section>
     </main>

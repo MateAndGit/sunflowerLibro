@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Libro Dashboard</title>
+    <!-- Supabase CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- 1. Login Section -->
+    <div id="login-section" class="container">
+      <h2>Admin Login</h2>
+      <input type="email" id="login-email" placeholder="Email Address" />
+      <input type="password" id="login-password" placeholder="Password" />
+      <button id="login-btn">Log In</button>
+    </div>
+
+    <!-- 2. Main Administration Section -->
+    <div id="admin-section" class="container hidden">
+      <h2>Book Registration</h2>
+
+      <select class="simple-select" id="data-select">
+        <option value="" disabled selected hidden>
+          Please select a category
+        </option>
+      </select>
+
+      <input type="text" id="book-title" placeholder="Book Title" />
+      <input type="number" id="book-price" placeholder="Price ($)" min="0" />
+      <textarea
+        id="book-desc"
+        rows="4"
+        placeholder="Book Description"
+      ></textarea>
+
+      <!-- Custom File Upload Component -->
+      <div class="file-upload-wrapper">
+        <label for="book-image" class="file-upload-label">
+          Choose Cover Image
+        </label>
+        <input type="file" id="book-image" accept="image/*" />
+        <span id="file-name-preview" class="file-name-preview"
+          >No file selected</span
+        >
+      </div>
+
+      <div class="admin-btn">
+        <button id="upload-btn">Register</button>
+        <button id="logout-btn" class="logout-btn">Log Out</button>
+      </div>
+
+      <!-- Delete Management Area -->
+      <div class="list-title">🗑️ Remove Registered Books</div>
+      <div class="item-list" id="admin-item-list">
+        <!-- Dynamically loaded via Javascript -->
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

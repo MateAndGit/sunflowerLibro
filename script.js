@@ -1,259 +1,3 @@
-const categories = [
-  { id: 1, name: "Novela Histórica" },
-  { id: 2, name: "Ficción y Literatura" },
-  { id: 3, name: "Misterio y Suspenso" },
-  { id: 4, name: "Fantasía y Ciencia Ficción" },
-  { id: 5, name: "Biografías y Corrientes" },
-  { id: 6, name: "Poesía y Drama" },
-  { id: 7, name: "Desarrollo Personal" },
-  { id: 8, name: "Infantil y Juvenil" },
-  { id: 9, name: "Filosofía y Humanidades" },
-  { id: 10, name: "Arte y Fotografía" },
-];
-
-const products = [
-  {
-    id: 1,
-    image: "images/book-test.png",
-    title: "El Principito",
-    price: 15000,
-    category: "Ficción y Literatura",
-    amount: 0,
-  },
-  {
-    id: 2,
-    image: "images/book-test.png",
-    title: "Cien años de soledad",
-    price: 24500,
-    category: "Ficción y Literatura",
-    amount: 0,
-  },
-  {
-    id: 3,
-    image: "images/book-test.png",
-    title: "Ficciones",
-    price: 18000,
-    category: "Ficción y Literatura",
-    amount: 0,
-  },
-  {
-    id: 4,
-    image: "images/book-test.png",
-    title: "Rayuela",
-    price: 22000,
-    category: "Ficción y Literatura",
-    amount: 0,
-  },
-  {
-    id: 5,
-    image: "images/book-test.png",
-    title: "El túnel",
-    price: 13500,
-    category: "Misterio y Suspenso",
-    amount: 0,
-  },
-  {
-    id: 6,
-    image: "images/book-test.png",
-    title: "Don Quijote de la Mancha",
-    price: 29000,
-    category: "Ficción y Literatura",
-    amount: 0,
-  },
-  {
-    id: 7,
-    image: "images/book-test.png",
-    title: "La casa de los espíritus",
-    price: 21000,
-    category: "Novela Histórica",
-    amount: 0,
-  },
-  {
-    id: 8,
-    image: "images/book-test.png",
-    title: "Pedro Páramo",
-    price: 12000,
-    category: "Ficción y Literatura",
-    amount: 0,
-  },
-  {
-    id: 9,
-    image: "images/book-test.png",
-    title: "Crónica de una muerte anunciada",
-    price: 16500,
-    category: "Misterio y Suspenso",
-    amount: 0,
-  },
-  {
-    id: 10,
-    image: "images/book-test.png",
-    title: "El amor en los tiempos del cólera",
-    price: 23000,
-    category: "Ficción y Literatura",
-    amount: 0,
-  },
-  {
-    id: 11,
-    image: "images/book-test.png",
-    title: "Veinte poemas de amor y una canción desesperada",
-    price: 11000,
-    category: "Poesía y Drama",
-    amount: 0,
-  },
-  {
-    id: 12,
-    image: "images/book-test.png",
-    title: "La sombra del viento",
-    price: 26000,
-    category: "Misterio y Suspenso",
-    amount: 0,
-  },
-  {
-    id: 13,
-    image: "images/book-test.png",
-    title: "El laberinto de los espíritus",
-    price: 27500,
-    category: "Misterio y Suspenso",
-    amount: 0,
-  },
-  {
-    id: 14,
-    image: "images/book-test.png",
-    title: "La catedral del mar",
-    price: 25000,
-    category: "Novela Histórica",
-    amount: 0,
-  },
-  {
-    id: 15,
-    image: "images/book-test.png",
-    title: "El código Da Vinci",
-    price: 19500,
-    category: "Misterio y Suspenso",
-    amount: 0,
-  },
-  {
-    id: 16,
-    image: "images/book-test.png",
-    title: "Fahrenheit 451",
-    price: 15500,
-    category: "Fantasía y Ciencia Ficción",
-    amount: 0,
-  },
-  {
-    id: 17,
-    image: "images/book-test.png",
-    title: "Crónicas marcianas",
-    price: 14000,
-    category: "Fantasía y Ciencia Ficción",
-    amount: 0,
-  },
-  {
-    id: 18,
-    image: "images/book-test.png",
-    title: "El Hobbit",
-    price: 21500,
-    category: "Fantasía y Ciencia Ficción",
-    amount: 0,
-  },
-  {
-    id: 19,
-    image: "images/book-test.png",
-    title: "Diario de Ana Frank",
-    price: 13000,
-    category: "Biografías y Corrientes",
-    amount: 0,
-  },
-  {
-    id: 20,
-    image: "images/book-test.png",
-    title: "Steve Jobs",
-    price: 28000,
-    category: "Biografías y Corrientes",
-    amount: 0,
-  },
-  {
-    id: 21,
-    image: "images/book-test.png",
-    title: "Antología Poética",
-    price: 12500,
-    category: "Poesía y Drama",
-    amount: 0,
-  },
-  {
-    id: 22,
-    image: "images/book-test.png",
-    title: "Bodas de sangre",
-    price: 11500,
-    category: "Poesía y Drama",
-    amount: 0,
-  },
-  {
-    id: 23,
-    image: "images/book-test.png",
-    title: "El poder de los hábitos",
-    price: 18500,
-    category: "Desarrollo Personal",
-    amount: 0,
-  },
-  {
-    id: 24,
-    image: "images/book-test.png",
-    title: "Hábitos atómicos",
-    price: 19000,
-    category: "Desarrollo Personal",
-    amount: 0,
-  },
-  {
-    id: 25,
-    image: "images/book-test.png",
-    title: "Harry Potter y la piedra filosofal",
-    price: 20000,
-    category: "Infantil y Juvenil",
-    amount: 0,
-  },
-  {
-    id: 26,
-    image: "images/book-test.png",
-    title: "El principito ilustrado",
-    price: 17000,
-    category: "Infantil y Juvenil",
-    amount: 0,
-  },
-  {
-    id: 27,
-    image: "images/book-test.png",
-    title: "Así habló Zaratustra",
-    price: 16000,
-    category: "Filosofía y Humanidades",
-    amount: 0,
-  },
-  {
-    id: 28,
-    image: "images/book-test.png",
-    title: "El banquete",
-    price: 13000,
-    category: "Filosofía y Humanidades",
-    amount: 0,
-  },
-  {
-    id: 29,
-    image: "images/book-test.png",
-    title: "Historia del Arte",
-    price: 32000,
-    category: "Arte y Fotografía",
-    amount: 0,
-  },
-  {
-    id: 30,
-    image: "images/book-test.png",
-    title: "Gernika: Pintura y Poder",
-    price: 29500,
-    category: "Arte y Fotografía",
-    amount: 0,
-  },
-];
-
 const $pointer = document.getElementById("cursor__pointer");
 const $inner__eyes = document.getElementsByClassName("inner__eye");
 
@@ -294,26 +38,6 @@ function animateCursor() {
 }
 
 animateCursor();
-
-// const $cursor = document.getElementById("cursor");
-// const $intro = document.getElementById("intro");
-// const $mainSections = document.getElementById("main__sections");
-
-// if ($intro) {
-//   $intro.addEventListener(
-//     "click",
-//     () => {
-//       $intro.classList.add("exit");
-//       if ($cursor) $cursor.classList.add("hidden");
-//       if ($mainSections) $mainSections.classList.remove("hidden");
-//     },
-//     { once: true },
-//   );
-
-//   $intro.addEventListener("animationend", () => {
-//     $intro.style.display = "none";
-//   });
-// }
 
 const $countNum = document.getElementById("count__num");
 let cartList = [];
@@ -472,26 +196,42 @@ $modal.addEventListener("click", (e) => {
 
 const $cardContainer = document.getElementById("card__container");
 
-function bookList(name) {
+const MY_URL = "https://zwyuatfvkchspjtskcff.supabase.co";
+const MY_KEY = "sb_publishable_Z76E40NfSGLSU1LWNlKzFQ_kvezPIsW";
+const indexSupabase = window.supabase.createClient(MY_URL, MY_KEY);
+
+let products = [];
+async function bookList() {
   if (!$cardContainer) return;
 
-  const filteredProducts = products.filter((p) =>
-    name ? p.category === name : true,
-  );
+  const { data, error } = await indexSupabase
+    .from("books")
+    .select("*")
+    .order("id", { ascending: false });
 
-  $cardContainer.innerHTML = filteredProducts
+  if (error) {
+    console.error("데이터 로드 실패:", error);
+    return;
+  }
+
+  products = data;
+  if (data.length === 0) {
+    grid.innerHTML = "등록된 책이 없습니다.";
+    return;
+  }
+  $cardContainer.innerHTML = data
     .map(
-      (p) => `
+      (book) => `
           <div class="card">
-              <img class="card__img-area" src="${p.image}" alt="${p.title}"/>
+              <img src="${book.image_url}" alt="${book.title}" onerror="this.src='https://via.placeholder.com/200x250?text=No+Image'">
             <div class="card__title">
-              <h1>${p.title}</h1>
+              <h1>${book.title}</h1>
             </div>
             <div class="card__price">
-              <p>$${p.price.toLocaleString()}</p>
+              <p>$${book.price.toLocaleString()}</p>
             </div>
             <div class="card__btns">
-              <button onclick="addToCart(${p.id})">COMPRAR</button>
+              <button onclick="addToCart(${book.id})">COMPRAR</button>
               <button>VER</button>
             </div>
           </div>
@@ -500,23 +240,30 @@ function bookList(name) {
     .join("");
 }
 
-const $category = document.getElementById("category");
+let categories = [];
+async function loadCategories() {
+  const selectEl = document.getElementById("data-select");
+  if (!selectEl) return;
 
-function bookCategoryLoad() {
-  if (!$category) return;
+  const { data, error } = await indexSupabase
+    .from("categories")
+    .select("id, name");
 
-  $category.innerHTML = categories
-    .map(
-      (c) => `
-          <div class="category__area">
-            <span onclick="bookList('${c.name}')">${c.name}</span>
-          </div>
-    `,
-    )
-    .join("");
+  if (error) return;
+
+  if (data) {
+    categories = data;
+    selectEl.innerHTML =
+      '<option value="" disabled selected hidden>Please select a category</option>';
+    data.forEach((category) => {
+      const option = document.createElement("option");
+      option.value = category.id;
+      option.textContent = category.name;
+      selectEl.appendChild(option);
+    });
+  }
 }
-
 document.addEventListener("DOMContentLoaded", () => {
-  bookCategoryLoad();
+  loadCategories();
   bookList();
 });

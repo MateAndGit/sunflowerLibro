@@ -110,27 +110,46 @@
 @media (max-width: 768px) {
   .hero__title h1 {
     font-size: 2em;
-    margin-top: 50px;
-    margin-bottom: 2em;
+    margin: 1em 0;
   }
-
   #category {
     display: none;
   }
-  #card__container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 30px;
-    padding: 0 20px;
+  .simple-select {
     width: 100%;
+    padding: 20px;
+    margin-bottom: 16px;
+    border: 1.5px solid #eaddcf;
+    border-radius: 12px;
+    background-color: #faf8f5;
+    font-size: 15px;
+    color: #4a3e3d;
     box-sizing: border-box;
+    outline: none;
+    transition: all 0.2s ease-in-out;
   }
-  .card {
-    width: 100%;
-    max-width: 360px;
-    margin: 0 auto;
+  .simple-select:focus {
+    border-color: #d4a373;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 4px rgba(212, 163, 115, 0.15);
   }
+  option {
+    overflow: hidden;
+  }
+}
+#card__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  padding: 0 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.card {
+  width: 100%;
+  max-width: 360px;
+  margin: 0 auto;
 }
 
 @media (min-width: 769px) {
@@ -145,5 +164,14 @@
     gap: 70px;
     max-width: 1200px;
     margin: 0 auto;
+  }
+  .card {
+    width: 100%;
+    height: 100vh;
+    margin: 0 auto;
+  }
+
+  .simple-select {
+    display: none;
   }
 }
