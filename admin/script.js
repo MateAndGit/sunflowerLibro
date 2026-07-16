@@ -8,6 +8,27 @@ const adminSupabase = window.supabase.createClient(MY_URL, MY_KEY);
 let editingBookId = null;
 let currentBooks = [];
 
+// Compressor.js를 사용하기 위한 동기식 헬퍼 함수
+function compressImageWithLibrary(file) {
+  return new Promise((resolve, reject) => {
+    new Compressor(file, {
+      quality: 0.6, // 압축 화질 (0.6이 용량 대비 결과물이 가장 뛰어납니다)
+      maxWidth: 800, // 최대 너비 지정
+      success(result) {
+        // 결과로 나온 Blob을 File 객체로 변환하여 반환
+        const compressedFile = new File([result], file.name, {
+          type: result.type,
+          lastModified: Date.now(),
+        });
+        resolve(compressedFile);
+      },
+      error(err) {
+        reject(err);
+      },
+    });
+  });
+}
+
 // [Delete] 책 삭제 기능
 window.deleteBook = async function (id, imageUrl) {
   if (!confirm("Are you sure you want to delete this book?")) return;
@@ -140,7 +161,7 @@ async function loadCategories() {
   }
 }
 
-// [Create & Update] 등록/수정 통합 처리
+// [Create & Update] 등록/수정 통합 처리 (Compressor.js 연동 완료!)
 document.getElementById("upload-btn").addEventListener("click", async () => {
   const categoryId = document.getElementById("data-select").value;
   const title = document.getElementById("book-title").value;
@@ -162,12 +183,17 @@ document.getElementById("upload-btn").addEventListener("click", async () => {
     let finalImageUrl = null;
 
     if (imageFile) {
-      const fileExt = imageFile.name.split(".").pop();
+      // 🌟 [핵심 변경 사항] 업로드 전에 Compressor.js 헬퍼 함수로 이미지를 가로채 압축합니다.
+      const compressedFile = await compressImageWithLibrary(imageFile);
+
+      // 압축된 파일 정보로 확장자 및 파일명을 재정의합니다.
+      const fileExt = compressedFile.name.split(".").pop();
       const fileName = `${Date.now()}.${fileExt}`;
 
+      // Supabase Storage에 원본 대신 압축된 파일(compressedFile)을 업로드합니다.
       const { error: uploadError } = await adminSupabase.storage
         .from("book-covers")
-        .upload(fileName, imageFile);
+        .upload(fileName, compressedFile);
 
       if (uploadError) {
         alert("Image upload failed: " + uploadError.message);
@@ -242,7 +268,6 @@ function resetForm() {
 
 // [Read] Load Books in Admin View (상세 정보 뷰 추가 버전)
 async function loadAdminBooks() {
-  // 카테고리명 매칭을 위해 카테고리 정보 조인 추가
   const { data, error } = await adminSupabase
     .from("books")
     .select("*, categories(name)")
