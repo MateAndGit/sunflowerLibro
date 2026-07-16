@@ -177,7 +177,7 @@ function renderCartList() {
       (item) => `
       <div class="list__container">
         <div class="list__img-area">
-          <img src="${item.image_url || item.image}" alt="${item.title}"/>
+          <img src="${item.image_url || item.image}" loading="lazy" alt="${item.title}"/>
         </div>
         <div class="list__title-amount">
           <h1 class="list__title">${item.title}</h1>
@@ -253,17 +253,28 @@ async function fetchBookList(categoryId = null) {
       : data.filter((book) => book.category_id === Number(categoryId));
 
   if (filteredBooks.length === 0) {
-    $cardContainer.innerHTML = "이 카테고리에 등록된 상품이 없습니다.";
+    $cardContainer.innerHTML = `
+    <div class="container-empty">
+      <div class="no-product-message">등록된 상품이 없습니다.</div>
+    </div>
+  `;
     return;
   }
-
   // 필터링된 책 목록 카드로 화면에 출력
+  // fetchBookList 함수의 카드 그리는 부분
   $cardContainer.innerHTML = filteredBooks
     .map(
       (book) => `
       <div class="card">
         <div class="card__img-area">
-          <img src="${book.image_url}" alt="${book.title}" onerror="this.src='https://via.placeholder.com/200x250?text=No+Image'">
+          <!-- onload="this.classList.add('loaded'); this.parentElement.classList.add('loaded')" 추가 -->
+          <img 
+            src="${book.image_url}" 
+            alt="${book.title}" 
+            loading="lazy"
+            onload="this.classList.add('loaded'); this.parentElement.classList.add('loaded');"
+            onerror="this.src='https://via.placeholder.com/200x250?text=No+Image'; this.classList.add('loaded'); this.parentElement.classList.add('loaded');"
+          >
         </div>
         <div class="card__title">
           <h1>${book.title}</h1>
