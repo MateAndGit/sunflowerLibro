@@ -65,6 +65,7 @@ function addToCart(id) {
   cartCountUpdated();
   alert(`${product.title}을 담았습니다.`);
 }
+
 const $cartWrapper = document.getElementById("cart-wrapper");
 const $modal = document.getElementById("modal-overlay");
 const $modalClose = document.getElementById("modal__close");
@@ -201,7 +202,9 @@ const MY_KEY = "sb_publishable_Z76E40NfSGLSU1LWNlKzFQ_kvezPIsW";
 const indexSupabase = window.supabase.createClient(MY_URL, MY_KEY);
 
 let products = [];
-async function bookList() {
+
+async function bookList(categoryId = null) {
+  // 변수명을 categoryId로 명확하게 변경
   if (!$cardContainer) return;
 
   const { data, error } = await indexSupabase
@@ -215,52 +218,94 @@ async function bookList() {
   }
 
   products = data;
+
   if (data.length === 0) {
-    grid.innerHTML = "등록된 책이 없습니다.";
+    $cardContainer.innerHTML = "등록된 책이 없습니다.";
     return;
   }
-  $cardContainer.innerHTML = data
+
+  const filteredBooks =
+    categoryId === null || categoryId === undefined
+      ? data
+      : data.filter((book) => book.category_id === Number(categoryId));
+
+  if (filteredBooks.length === 0) {
+    $cardContainer.innerHTML = "이 카테고리에 등록된 상품이 없습니다.";
+    return;
+  }
+
+  // 필터링된 데이터를 화면에 그립니다.
+  $cardContainer.innerHTML = filteredBooks
     .map(
       (book) => `
-          <div class="card">
-              <img src="${book.image_url}" alt="${book.title}" onerror="this.src='https://via.placeholder.com/200x250?text=No+Image'">
-            <div class="card__title">
-              <h1>${book.title}</h1>
-            </div>
-            <div class="card__price">
-              <p>$${book.price.toLocaleString()}</p>
-            </div>
-            <div class="card__btns">
-              <button onclick="addToCart(${book.id})">COMPRAR</button>
-              <button>VER</button>
-            </div>
+        <div class="card">
+          <img src="${book.image_url}" alt="${book.title}" onerror="this.src='https://via.placeholder.com/200x250?text=No+Image'">
+          <div class="card__title">
+            <h1>${book.title}</h1>
           </div>
+          <div class="card__price">
+            <p>$${book.price.toLocaleString()}</p>
+          </div>
+          <div class="card__btns">
+            <button onclick="addToCart(${book.id})">COMPRAR</button>
+            <button>VER</button>
+          </div>
+        </div>
     `,
     )
     .join("");
 }
 
+// 카테고리 클릭 시 필터링 실행
+function handleFilter(id) {
+  bookList(id);
+}
 let categories = [];
+
 async function loadCategories() {
   const selectEl = document.getElementById("data-select");
-  if (!selectEl) return;
+  const categoryContainer = document.getElementById("category"); // 변수명 충돌 방지를 위해 Container로 변경
 
+  // 1. Supabase에서 카테고리 정보 가져오기
   const { data, error } = await indexSupabase
     .from("categories")
     .select("id, name");
 
-  if (error) return;
+  if (error) {
+    console.error("카테고리를 로드하는 중 에러 발생:", error);
+    return;
+  }
 
   if (data) {
     categories = data;
-    selectEl.innerHTML =
-      '<option value="" disabled selected hidden>Please select a category</option>';
-    data.forEach((category) => {
-      const option = document.createElement("option");
-      option.value = category.id;
-      option.textContent = category.name;
-      selectEl.appendChild(option);
-    });
+    // 2. 글 등록/수정 폼의 셀렉트 박스(드롭다운) 그리기 (요소가 있을 때만 실행)
+    if (selectEl) {
+      selectEl.innerHTML =
+        '<option value="" disabled selected hidden>Please select a category</option>';
+      data.forEach((item) => {
+        const option = document.createElement("option");
+        option.value = item.id;
+        option.textContent = item.name;
+        selectEl.appendChild(option);
+      });
+
+      selectEl.onchange = function (event) {
+        const selectedCategoryId = event.target.value;
+        console.log("선택된 카테고리 ID:", selectedCategoryId);
+
+        // 이곳에 선택했을 때 실행하고 싶은 함수를 작성하세요!
+        예: handleFilter(selectedCategoryId);
+      };
+    }
+    // 3. 메인 화면의 카테고리 필터 버튼 탭 그리기 (요소가 있을 때만 실행)
+    if (categoryContainer) {
+      categoryContainer.innerHTML = data
+        .map(
+          (item) =>
+            `<span onclick="handleFilter(${item.id})">${item.name}</span>`,
+        )
+        .join("");
+    }
   }
 }
 document.addEventListener("DOMContentLoaded", () => {
