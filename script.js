@@ -1,13 +1,15 @@
+/* ==========================================================================
+   1. 마우스 위치 및 눈동자(Eye) 애니메이션 효과
+   ========================================================================== */
 const $pointer = document.getElementById("cursor__pointer");
-const $inner__eyes = document.getElementsByClassName("inner__eye");
+const $innerEyes = document.getElementsByClassName("inner__eye"); // 스네이크 케이스(__)를 카멜케이스로 변경하여 일관성 유지
 
-// 🔥 핵심: 초기 시작 좌표를 0이 아니라 화면의 정중앙 좌표로 설정합니다.
+// 초기 시작 좌표를 화면의 정중앙 좌표로 설정
 let mouseX = window.innerWidth / 2;
 let mouseY = window.innerHeight / 2;
 let cursorX = window.innerWidth / 2;
 let cursorY = window.innerHeight / 2;
 
-// 눈동자 위치 변수 초기화
 let eyeX = 0;
 let eyeY = 0;
 
@@ -17,20 +19,23 @@ window.addEventListener("mousemove", (e) => {
 });
 
 function animateCursor() {
+  // 마우스 위치로 부드럽게 커서 이동
   cursorX += (mouseX - cursorX) * 0.1;
   cursorY += (mouseY - cursorY) * 0.1;
   if ($pointer) $pointer.style.translate = `${cursorX}px ${cursorY}px`;
 
+  // 눈동자가 바라볼 목표 좌표 계산
   const targetEyeX = mouseX - window.innerWidth / 2;
   const targetEyeY = mouseY - window.innerHeight / 2;
 
   eyeX += (targetEyeX - eyeX) * 0.1;
   eyeY += (targetEyeY - eyeY) * 0.1;
 
+  // 눈동자가 눈 흰자 밖으로 나가지 않도록 한계값 제한
   const limitedX = Math.max(-15, Math.min(15, eyeX * 0.05));
   const limitedY = Math.max(-15, Math.min(15, eyeY * 0.05));
 
-  for (const $eye of $inner__eyes) {
+  for (const $eye of $innerEyes) {
     $eye.style.transform = `translate(${limitedX}px, ${limitedY}px)`;
   }
 
@@ -39,33 +44,107 @@ function animateCursor() {
 
 animateCursor();
 
+/* ==========================================================================
+   2. 장바구니(Cart) 상태 관리 및 기능
+   ========================================================================== */
 const $countNum = document.getElementById("count__num");
 let cartList = [];
 
-function cartCountUpdated() {
+// 장바구니 뱃지 숫자 업데이트
+function updateCartCount() {
+  // cartCountUpdated에서 명동형 동사구로 변경
   $countNum.textContent = cartList.length;
 }
 
+// 장바구니 상품 추가
 function addToCart(id) {
   const product = products.find((p) => p.id === id);
 
   if (!product) return;
 
-  let count = 0;
   const isDuplicated = cartList.find((p) => p.id === id);
 
   if (isDuplicated) {
-    console.log("변경 전:", product.amount);
+    // 수량 변경 시 디버깅 편의를 위해 로그 유지
+    console.log("변경 전 수량:", isDuplicated.amount);
     isDuplicated.amount++;
-    console.log("변경 후:", product.amount);
+    console.log("변경 후 수량:", isDuplicated.amount);
   } else {
+    // 새로운 상품 추가 (원본 데이터 훼손 방지를 위해 스프레드 연산자 사용)
     const newCartItem = { ...product, amount: 1 };
     cartList.unshift(newCartItem);
   }
-  cartCountUpdated();
-  alert(`${product.title}을 담았습니다.`);
+
+  updateCartCount();
+  alert(`"${product.title}" 상품을 장바구니에 담았습니다.`);
 }
 
+// 장바구니 상품 수량 감소
+function minusBtn(btn, id) {
+  const container = btn.closest(".list__container");
+  const currentInput = container.querySelector(".quantity-input");
+  const currentPrice = container.querySelector(".quantity-price");
+
+  const product = cartList.find((c) => c.id === id);
+  if (!product) return;
+
+  let number = Number(currentInput.value);
+
+  if (number > 1) {
+    number--;
+    currentInput.value = number;
+    product.amount = number; // 장바구니 객체 수량 최신화
+    currentPrice.textContent = `$${(product.price * number).toLocaleString()}`;
+    updateTotalPrice(); // updatePrice에서 명확한 이름으로 변경
+  }
+}
+
+// 장바구니 상품 수량 증가
+function plusBtn(btn, id) {
+  const container = btn.closest(".list__container");
+  const currentInput = container.querySelector(".quantity-input");
+  const currentPrice = container.querySelector(".quantity-price");
+
+  const product = cartList.find((c) => c.id === id);
+  if (!product) return;
+
+  let number = Number(currentInput.value);
+  if (number >= 10) {
+    alert("한 상품당 최대 10개까지 구매 가능합니다.");
+    return;
+  }
+
+  number++;
+  currentInput.value = number;
+  product.amount = number; // 장바구니 객체 수량 최신화
+  currentPrice.textContent = `$${(product.price * number).toLocaleString()}`;
+  updateTotalPrice(); // updatePrice에서 명확한 이름으로 변경
+}
+
+// 장바구니 총 금액 계산 및 갱신
+const $totalPrice = document.getElementById("total__price");
+
+function updateTotalPrice() {
+  // updatePrice -> updateTotalPrice
+  let total = 0; // 오타 수정: totalPirce -> total
+  cartList.forEach((item) => {
+    total += item.price * item.amount;
+  });
+  $totalPrice.textContent = `Total: $${total.toLocaleString()}`;
+}
+
+// 장바구니 내 특정 상품 삭제
+function deleteCartItem(id) {
+  // listDelete에서 명확한 기능 위주 이름으로 변경
+  cartList = cartList.filter((item) => item.id !== id);
+  updateTotalPrice();
+  renderCartList(); // renderList -> renderCartList
+  updateCartCount();
+}
+
+/* ==========================================================================
+   3. 모달(Modal) 제어 및 장바구니 UI 렌더링
+   ========================================================================== */
 const $cartWrapper = document.getElementById("cart-wrapper");
 const $modal = document.getElementById("modal-overlay");
 const $modalClose = document.getElementById("modal__close");
@@ -81,72 +160,9 @@ function closeModal() {
   document.body.classList.remove("no-scroll");
 }
 
-function minusBtn(btn, id) {
-  const container = btn.closest(".list__container");
-
-  const currentInput = container.querySelector(".quantity-input");
-  const currentPrice = container.querySelector(".quantity-price");
-  const product = cartList.find((c) => c.id === id);
-  if (!product) {
-    return;
-  }
-  let number = Number(currentInput.value);
-  // if (number < 1) {
-  //   if (confirm("상품을 삭제 하시겠습니까?")) {
-  //     // cartList.pop();
-  //   }
-  //   number = 1;
-  // }
-  if (number > 1) {
-    number--;
-    currentInput.value = number;
-    product.amount = number;
-    currentPrice.textContent = `$${(product.price * number).toLocaleString()}`;
-    updatePrice();
-  }
-}
-function plusBtn(btn, id) {
-  const container = btn.closest(".list__container");
-
-  const currentInput = container.querySelector(".quantity-input");
-  const currentPrice = container.querySelector(".quantity-price");
-  const product = cartList.find((c) => c.id === id);
-  if (!product) {
-    return;
-  }
-  let number = Number(currentInput.value);
-  if (number >= 10) {
-    alert("10개 이상은 구입이 불가능해요 ㅠㅠ");
-    return;
-  }
-
-  number++;
-  currentInput.value = number;
-  product.amount = number;
-  currentPrice.textContent = `$${(product.price * number).toLocaleString()}`;
-  updatePrice();
-}
-
-const $totalPrice = document.getElementById("total__price");
-
-function updatePrice() {
-  let totalPirce = 0;
-  cartList.forEach((c) => {
-    totalPirce += c.price * c.amount;
-  });
-  $totalPrice.textContent = `Total: $${totalPirce.toLocaleString()}`;
-}
-
-const $listDelete = document.getElementById("list__delete");
-
-function listDelete(id) {
-  cartList = cartList.filter((c) => c.id !== id);
-  updatePrice();
-  renderList();
-  cartCountUpdated();
-}
-
-function renderList() {
+// 장바구니 목록을 모달 내부에 그리기
+function renderCartList() {
+  // renderList -> renderCartList로 구체화
   if (cartList.length === 0) {
     $cartListModal.innerHTML = `
       <div class="cart__list empty">
@@ -155,38 +171,39 @@ function renderList() {
     `;
     return;
   }
+
   $cartListModal.innerHTML = cartList
     .map(
-      (list) => `
+      (item) => `
       <div class="list__container">
         <div class="list__img-area">
-          <img src="${list.image}" alt="${list.title}"/>
+          <img src="${item.image_url || item.image}" alt="${item.title}"/>
         </div>
         <div class="list__title-amount">
-          <h1 class="list__title">${list.title}</h1>
+          <h1 class="list__title">${item.title}</h1>
           <div class="quantity-picker">
-            <button class="btn-minus" onclick="minusBtn(this,${list.id})">-</button>
-            <input class="quantity-input" type="number" value="${list.amount}" min="1" max="99" readonly/>
-            <button class="btn-plus" onclick="plusBtn(this,${list.id})">+</button>
+            <button class="btn-minus" onclick="minusBtn(this, ${item.id})">-</button>
+            <input class="quantity-input" type="number" value="${item.amount}" min="1" max="99" readonly/>
+            <button class="btn-plus" onclick="plusBtn(this, ${item.id})">+</button>
           </div>
         </div>
         <div class="list__delete-price">
-          <div id="list__delete" class="list__delete-area" onclick="listDelete(${list.id})">
+          <div class="list__delete-area" onclick="deleteCartItem(${item.id})">
             <img src="images/delete.png" alt="delete"/>
           </div>
-          <p class="quantity-price">$${(list.price * list.amount).toLocaleString()}</p>
+          <p class="quantity-price">$${(item.price * item.amount).toLocaleString()}</p>
         </div>
       </div>
-        
     `,
     )
     .join("");
-  updatePrice();
+
+  updateTotalPrice();
 }
 
 $cartWrapper.addEventListener("click", () => {
   openModal();
-  renderList();
+  renderCartList();
 });
 
 $modal.addEventListener("click", (e) => {
@@ -195,25 +212,30 @@ $modal.addEventListener("click", (e) => {
   }
 });
 
+/* ==========================================================================
+   4. Supabase 연동 및 상품/카테고리 목록 바인딩
+   ========================================================================== */
 const $cardContainer = document.getElementById("card__container");
 
-const MY_URL = "https://zwyuatfvkchspjtskcff.supabase.co";
-const MY_KEY = "sb_publishable_Z76E40NfSGLSU1LWNlKzFQ_kvezPIsW";
-const indexSupabase = window.supabase.createClient(MY_URL, MY_KEY);
+const SUPABASE_URL = "https://zwyuatfvkchspjtskcff.supabase.co";
+const SUPABASE_KEY = "sb_publishable_Z76E40NfSGLSU1LWNlKzFQ_kvezPIsW";
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY); // 변수명 직관화
 
 let products = [];
+let categories = [];
 
-async function bookList(categoryId = null) {
-  // 변수명을 categoryId로 명확하게 변경
+// 책 목록 불러오기 및 필터링 적용
+async function fetchBookList(categoryId = null) {
+  // bookList에서 비동기 명사인 fetchBookList로 변경
   if (!$cardContainer) return;
 
-  const { data, error } = await indexSupabase
+  const { data, error } = await supabaseClient
     .from("books")
     .select("*")
     .order("id", { ascending: false });
 
   if (error) {
-    console.error("데이터 로드 실패:", error);
+    console.error("도서 데이터를 불러오지 못했습니다:", error);
     return;
   }
 
@@ -224,6 +246,7 @@ async function bookList(categoryId = null) {
     return;
   }
 
+  // 카테고리 필터링 조건 설정
   const filteredBooks =
     categoryId === null || categoryId === undefined
       ? data
@@ -234,12 +257,11 @@ async function bookList(categoryId = null) {
     return;
   }
 
-  // 필터링된 데이터를 화면에 그립니다.
+  // 필터링된 책 목록 카드로 화면에 출력
   $cardContainer.innerHTML = filteredBooks
     .map(
       (book) => `
       <div class="card">
-        <!-- ★ 여기에 card__img-area 컨테이너를 추가해 감싸줍니다 -->
         <div class="card__img-area">
           <img src="${book.image_url}" alt="${book.title}" onerror="this.src='https://via.placeholder.com/200x250?text=No+Image'">
         </div>
@@ -254,55 +276,53 @@ async function bookList(categoryId = null) {
           <button>VER</button>
         </div>
       </div>
-  `,
+    `,
     )
     .join("");
 }
 
-// 카테고리 클릭 시 필터링 실행
+// 카테고리 클릭 필터 핸들러
 function handleFilter(id) {
-  bookList(id);
+  fetchBookList(id);
 }
-let categories = [];
 
+// 카테고리 불러오기 및 레이아웃 바인딩
 async function loadCategories() {
-  const selectEl = document.getElementById("data-select");
-  const categoryContainer = document.getElementById("category"); // 변수명 충돌 방지를 위해 Container로 변경
+  const $selectEl = document.getElementById("data-select");
+  const $categoryContainer = document.getElementById("category");
 
-  // 1. Supabase에서 카테고리 정보 가져오기
-  const { data, error } = await indexSupabase
+  const { data, error } = await supabaseClient
     .from("categories")
     .select("id, name");
 
   if (error) {
-    console.error("카테고리를 로드하는 중 에러 발생:", error);
+    console.error("카테고리를 불러오지 못했습니다:", error);
     return;
   }
 
   if (data) {
     categories = data;
-    // 2. 글 등록/수정 폼의 셀렉트 박스(드롭다운) 그리기 (요소가 있을 때만 실행)
-    if (selectEl) {
-      selectEl.innerHTML =
+
+    // 1. 드롭다운 선택 필터 바인딩 (수정/등록 페이지 등에 존재 시)
+    if ($selectEl) {
+      $selectEl.innerHTML =
         '<option value="" disabled selected hidden>Please select a category</option>';
       data.forEach((item) => {
         const option = document.createElement("option");
         option.value = item.id;
         option.textContent = item.name;
-        selectEl.appendChild(option);
+        $selectEl.appendChild(option);
       });
 
-      selectEl.onchange = function (event) {
+      $selectEl.onchange = function (event) {
         const selectedCategoryId = event.target.value;
-        console.log("선택된 카테고리 ID:", selectedCategoryId);
-
-        // 이곳에 선택했을 때 실행하고 싶은 함수를 작성하세요!
-        예: handleFilter(selectedCategoryId);
+        handleFilter(selectedCategoryId);
       };
     }
-    // 3. 메인 화면의 카테고리 필터 버튼 탭 그리기 (요소가 있을 때만 실행)
-    if (categoryContainer) {
-      categoryContainer.innerHTML = data
+
+    // 2. 메인 페이지 상단 카테고리 태그 버튼 목록 바인딩
+    if ($categoryContainer) {
+      $categoryContainer.innerHTML = data
         .map(
           (item) =>
             `<span onclick="handleFilter(${item.id})">${item.name}</span>`,
@@ -311,7 +331,9 @@ async function loadCategories() {
     }
   }
 }
+
+// 페이지 초기 로드
 document.addEventListener("DOMContentLoaded", () => {
   loadCategories();
-  bookList();
+  fetchBookList();
 });
