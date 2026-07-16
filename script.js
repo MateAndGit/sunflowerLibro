@@ -238,20 +238,23 @@ async function bookList(categoryId = null) {
   $cardContainer.innerHTML = filteredBooks
     .map(
       (book) => `
-        <div class="card">
+      <div class="card">
+        <!-- ★ 여기에 card__img-area 컨테이너를 추가해 감싸줍니다 -->
+        <div class="card__img-area">
           <img src="${book.image_url}" alt="${book.title}" onerror="this.src='https://via.placeholder.com/200x250?text=No+Image'">
-          <div class="card__title">
-            <h1>${book.title}</h1>
-          </div>
-          <div class="card__price">
-            <p>$${book.price.toLocaleString()}</p>
-          </div>
-          <div class="card__btns">
-            <button onclick="addToCart(${book.id})">COMPRAR</button>
-            <button>VER</button>
-          </div>
         </div>
-    `,
+        <div class="card__title">
+          <h1>${book.title}</h1>
+        </div>
+        <div class="card__price">
+          <p>$${book.price.toLocaleString()}</p>
+        </div>
+        <div class="card__btns">
+          <button onclick="addToCart(${book.id})">COMPRAR</button>
+          <button>VER</button>
+        </div>
+      </div>
+  `,
     )
     .join("");
 }
