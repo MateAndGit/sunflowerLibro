@@ -224,9 +224,8 @@ const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 let products = [];
 let categories = [];
 
-// 책 목록 불러오기 및 필터링 적용
+// 책 목록 불러오기 및 필터링 적용 (버튼 2개 및 클래스 토글 추가)
 async function fetchBookList(categoryId = null) {
-  // bookList에서 비동기 명사인 fetchBookList로 변경
   if (!$cardContainer) return;
 
   const { data, error } = await supabaseClient
@@ -246,7 +245,6 @@ async function fetchBookList(categoryId = null) {
     return;
   }
 
-  // 카테고리 필터링 조건 설정
   const filteredBooks =
     categoryId === null || categoryId === undefined
       ? data
@@ -254,20 +252,26 @@ async function fetchBookList(categoryId = null) {
 
   if (filteredBooks.length === 0) {
     $cardContainer.innerHTML = `
-    <div class="container-empty">
-      <div class="no-product-message">등록된 상품이 없습니다.</div>
-    </div>
-  `;
+      <div class="container-empty">
+        <div class="no-product-message">등록된 상품이 없습니다.</div>
+      </div>
+    `;
     return;
   }
-  // 필터링된 책 목록 카드로 화면에 출력
-  // fetchBookList 함수의 카드 그리는 부분
+
   $cardContainer.innerHTML = filteredBooks
     .map(
       (book) => `
-      <div class="card">
+      <div class="card" id="card-${book.id}">
+        <!-- 클릭 시 나타날 설명글 레이어 (닫기 버튼 추가) -->
+        <div class="card__overlay">
+          <div class="overlay__close" onclick="toggleDescription(${book.id})">✕</div>
+          <p class="overlay__description">
+            ${book.description || "No hay descripción disponible."}
+          </p>
+        </div>
+
         <div class="card__img-area">
-          <!-- onload="this.classList.add('loaded'); this.parentElement.classList.add('loaded')" 추가 -->
           <img 
             src="${book.image_url}" 
             alt="${book.title}" 
@@ -283,13 +287,21 @@ async function fetchBookList(categoryId = null) {
           <p>$${book.price.toLocaleString()}</p>
         </div>
         <div class="card__btns">
-          <button onclick="addToCart(${book.id})">COMPRAR</button>
-          <button>VER</button>
+          <button class="btn-comprar" onclick="addToCart(${book.id})">COMPRAR</button>
+          <button class="btn-ver" onclick="toggleDescription(${book.id})">VER</button>
         </div>
       </div>
     `,
     )
     .join("");
+}
+
+// ★ 추가: 카드의 설명 레이어를 토글하는 함수
+function toggleDescription(bookId) {
+  const card = document.getElementById(`card-${bookId}`);
+  if (card) {
+    card.classList.toggle("show-description");
+  }
 }
 
 // 카테고리 클릭 필터 핸들러

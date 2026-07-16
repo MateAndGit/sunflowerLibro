@@ -23,28 +23,24 @@
   font-weight: bold;
   transition:
     transform 0.3s ease,
-    /* 트랜지션 시간을 1s -> 0.3s로 줄여 반응을 더 쫀득하게 개선 */ color 0.3s
-      ease;
+    color 0.3s ease;
   display: inline-block;
   text-align: center;
   cursor: pointer;
 }
 
 .category__area span:hover {
-  transform: scale(1.15); /* 과도한 1.3배 확대 대신 자연스러운 1.15배로 수정 */
+  transform: scale(1.15);
   color: #4e342e;
 }
 
 /* ==========================================================================
    2. 카드(Card) 기본 공통 스타일 (모바일 우선 모드)
    ========================================================================== */
-/* ==========================================================================
-   2. 카드(Card) 기본 공통 스타일 (모바일 우선 모드)
-   ========================================================================== */
 .card {
   width: 100%;
   max-width: 360px;
-  height: 520px; /* 전체 카드 높이는 유지 */
+  height: 520px;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
@@ -54,27 +50,33 @@
   animation: fadeIn 1s ease-out forwards;
   margin: 0 auto;
   background-color: #ffffff;
+
+  /* 오버레이 기준점 */
+  position: relative;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(15px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(78, 52, 46, 0.25);
 }
 
-/* 2-1. ★ 이미지 영역 높이 확장 (기존 290px -> 340px) */
+/* 2-1. 이미지 영역 */
 .card__img-area {
   width: 100%;
-  height: 340px; /* 사진을 더 크고 시원하게 보여주도록 늘렸습니다 */
+  height: 340px;
   overflow: hidden;
   flex-shrink: 0;
   background-color: #f0ede9;
   position: relative;
+  transition: filter 0.3s ease;
+}
+
+/* ★ 설명 보기 활성화(.show-description) 시 이미지가 흐려짐 */
+.card.show-description .card__img-area {
+  filter: blur(4px) brightness(0.8);
 }
 
 .card__img-area::before {
@@ -91,87 +93,6 @@
     rgba(240, 237, 233, 0) 100%
   );
   animation: shimmer 1.5s infinite;
-}
-
-@keyframes shimmer {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
-}
-
-.card__img-area.loaded::before {
-  display: none;
-}
-
-.card__img-area img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0;
-  transition: opacity 0.4s ease-in-out;
-}
-
-.card__img-area img.loaded {
-  opacity: 1;
-}
-
-/* 2-2. ★ 카드 내부 텍스트 여백 축소 (기존 요소들 다이어트) */
-.card__title h1 {
-  font-size: 1.2em;
-  text-align: center;
-  margin-top: 12px; /* 여백 축소 (기존 18px -> 12px) */
-  padding: 0 15px;
-  color: #4e342e;
-  font-weight: bold;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.card__price p {
-  font-size: 1.3em;
-  text-align: center;
-  margin: 8px 0; /* 여백 축소 (기존 15px -> 8px) */
-  color: #daa520;
-  font-weight: bold;
-}
-
-/* 2-3. ★ 하단 버튼 영역 여백 축소 */
-.card__btns {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  margin-top: auto;
-  padding: 0 15px 15px 15px; /* 바닥 여백을 살짝 줄여 여유 공간 확보 (기존 20px -> 15px) */
-}
-
-.card__btns button {
-  width: 45%;
-  height: 44px; /* 버튼 높이 조정 (기존 48px -> 44px) */
-  border: 1.5px solid #4e342e;
-  background-color: transparent;
-  color: #4e342e;
-  cursor: pointer;
-  border-radius: 10px;
-  font-weight: bold;
-  transition: all 0.3s ease;
-}
-
-.card__btns button:hover {
-  color: #daa520;
-  background-color: #4e342e;
-}
-
-@keyframes shimmer {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
 }
 
 .card__img-area.loaded::before {
@@ -195,12 +116,13 @@
   font-size: 1.25em;
   text-align: center;
   margin-top: 18px;
-  padding: 0 15px; /* 타이틀 글자가 길어질 때 카드를 뚫고 나가지 않도록 패딩 부여 */
+  padding: 0 15px;
   color: #4e342e;
   font-weight: bold;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap; /* 제목이 지나치게 길어지면 ...으로 예쁘게 생략 처리 */
+  white-space: nowrap;
+  transition: opacity 0.3s ease;
 }
 
 .card__price p {
@@ -209,6 +131,13 @@
   margin: 15px 0;
   color: #daa520;
   font-weight: bold;
+  transition: opacity 0.3s ease;
+}
+
+/* ★ 설명 보기 활성화 시 기존 제목과 가격을 서서히 투명하게 가림 */
+.card.show-description .card__title h1,
+.card.show-description .card__price p {
+  opacity: 0.1;
 }
 
 /* 2-3. 하단 버튼 영역 정렬 */
@@ -217,19 +146,21 @@
   justify-content: space-around;
   align-items: center;
   margin-top: auto;
-  padding: 0 15px 20px 15px; /* 패딩을 추가하여 간격 안정화 */
+  padding: 0 15px 20px 15px;
+  z-index: 20; /* 버튼 영역이 설명글 오버레이보다 무조건 위에 오도록 설정 */
 }
 
+/* 두 개의 버튼 스타일 원래대로 반반 유지 */
 .card__btns button {
-  width: 45%; /* 고정 너비(150px) 대신 유연한 비율(%)을 사용하여 반응형 대응 */
+  width: 45%;
   height: 48px;
   border: 1.5px solid #4e342e;
-  background-color: transparent;
+  background-color: #ffffff;
   color: #4e342e;
   cursor: pointer;
   border-radius: 10px;
   font-weight: bold;
-  transition: all 0.3s ease; /* 호버 시 색상이 부드럽게 바뀌도록 개선 */
+  transition: all 0.3s ease;
 }
 
 .card__btns button:hover {
@@ -237,12 +168,89 @@
   background-color: #4e342e;
 }
 
+/* ==========================================================================
+   2-4. 카드 오버레이 설명글 스타일 (클릭 제어 버전)
+   ========================================================================== */
+.card__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  /* 하단 버튼을 클릭하는 데 방해되지 않도록 영역 높이 조절 */
+  height: calc(100% - 75px);
+  background-color: rgba(255, 255, 255, 0.95);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px 20px 24px;
+  box-sizing: border-box;
+
+  /* 초기 상태: 완전 투명 및 클릭 불가능 */
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.95);
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+  z-index: 10;
+}
+
+/* ★ .show-description 클래스가 추가되었을 때 오버레이를 띄웁니다 */
+.card.show-description .card__overlay {
+  opacity: 1;
+  pointer-events: auto; /* 활성화되면 내부 닫기 버튼 및 스크롤 동작 활성화 */
+  transform: scale(1);
+}
+
+/* 우측 상단 X 닫기 버튼 */
+.overlay__close {
+  position: absolute;
+  top: 15px;
+  right: 18px;
+  font-size: 1.2rem;
+  color: #4e342e;
+  cursor: pointer;
+  font-weight: bold;
+  transition: transform 0.2s ease;
+}
+
+.overlay__close:hover {
+  transform: scale(1.2);
+  color: #daa520;
+}
+
+.overlay__description {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #4e342e;
+  text-align: center;
+  font-weight: 500;
+  max-height: 100%;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  padding-right: 4px;
+}
+
+/* 스크롤바 디자인 */
+.overlay__description::-webkit-scrollbar {
+  width: 4px;
+}
+
+.overlay__description::-webkit-scrollbar-thumb {
+  background-color: #eaddcf;
+  border-radius: 10px;
+}
+
+/* ==========================================================================
+   3. 빈 화면 및 반응형 레이아웃
+   ========================================================================== */
 .container-empty {
-  grid-column: 1 / -1; /* 데스크톱 그리드(3열) 환경에서도 전체 칸을 차지하도록 설정 */
+  grid-column: 1 / -1;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 300px; /* 정중앙 느낌이 나도록 위아래 영역 확보 */
+  min-height: 300px;
   width: 100%;
 }
 
@@ -253,9 +261,7 @@
   text-align: center;
 }
 
-/* ==========================================================================
-   3. 반응형 (모바일 & 태블릿 구간: 768px 이하)
-   ========================================================================== */
+/* 모바일 & 태블릿 구간: 768px 이하 */
 @media (max-width: 768px) {
   .hero__title h1 {
     font-size: 2em;
@@ -267,11 +273,11 @@
   }
 
   .simple-select {
-    width: 90%; /* 모바일 화면 양옆에 미세한 여유를 주기 위해 90%로 수정 */
+    width: 90%;
     max-width: 360px;
     padding: 15px;
     margin: 0 auto 24px auto;
-    display: block; /* 모바일에서 가운데 정렬을 위해 추가 */
+    display: block;
     border: 1.5px solid #eaddcf;
     border-radius: 12px;
     background-color: #faf8f5;
@@ -296,16 +302,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 35px; /* 모바일 카드 간의 위아래 간격을 살짝 늘려 쾌적하게 조절 */
-    padding: 0 20px 50px 20px; /* 하단 스크롤 여유 추가 */
+    gap: 35px;
+    padding: 0 20px 50px 20px;
     width: 100%;
     box-sizing: border-box;
   }
 }
 
-/* ==========================================================================
-   4. 반응형 (데스크톱 구간: 769px 이상)
-   ========================================================================== */
+/* 데스크톱 구간: 769px 이상 */
 @media (min-width: 769px) {
   #category {
     display: grid;
@@ -316,19 +320,18 @@
     margin-right: auto;
   }
 
-  /* ★ 핵심 개선: 가운데에 극단적으로 몰리던 폭을 확장 */
   #card__container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 40px; /* 너무 과했던 gap(70px)을 줄여서 한결 안정적으로 배치 */
-    max-width: 1200px; /* 최대폭을 기존 1000px에서 1200px로 확장하여 시원한 여백 확보 */
+    gap: 40px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 0 30px 80px 30px;
   }
 
   .card {
     width: 100%;
-    max-width: 360px; /* 카드가 과도하게 가로로 퍼지는 현상 방지 */
+    max-width: 360px;
     height: 540px; /* 데스크톱 전용 고정 높이 */
   }
 
